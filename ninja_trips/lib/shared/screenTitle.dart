@@ -8,7 +8,8 @@ class ScreenTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
-      duration: Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+      duration: Duration(milliseconds: 1000),
       //tween后面要写明值的类型
       tween: Tween<double>(begin: 0, end: 1),
       //builder就是放回一个新的widget
@@ -19,7 +20,7 @@ class ScreenTitle extends StatelessWidget {
       builder: (context, _value, _child) => Opacity(
         opacity: _value,
         child: Padding(
-          padding: EdgeInsets.only(top: _value * 20),
+          padding: EdgeInsets.only(top: _value * 50),
           child: _child,
         ),
       ),

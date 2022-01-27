@@ -15,6 +15,7 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
 //4. 创建一个动画，这个动画是使用当前的_controller去实现一个colorTween
   Animation<Color> _colorAnimation;
   Animation<double> _sizeAnimation;
+  Animation _curve;
 
   @override
   void initState() {
@@ -25,9 +26,10 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
     _controller =
         AnimationController(duration: Duration(milliseconds: 300), vsync: this);
 //5. 这一步就是给tween一个controller然后它就变成了一个animation
+    _curve = CurvedAnimation(parent: _controller, curve: Curves.easeInExpo);
 
     _colorAnimation =
-        ColorTween(begin: Colors.grey, end: Colors.red).animate(_controller);
+        ColorTween(begin: Colors.grey, end: Colors.red).animate(_curve);
 
 //9.变大再变小，也就是一组tween的list用TweenSequence
     _sizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
@@ -36,7 +38,7 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
           tween: Tween<double>(begin: 30, end: 50), weight: 50),
       TweenSequenceItem<double>(
           tween: Tween<double>(begin: 50, end: 30), weight: 50),
-    ]).animate(_controller);
+    ]).animate(_curve);
 
 //3. 播放动画，会默认从0-1走ticker,也就是controller.value会从0到1
     _controller.addListener(() {
